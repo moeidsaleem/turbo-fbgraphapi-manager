@@ -1,22 +1,19 @@
 const express = require('express')
+let env = require('dotenv').config({path: __dirname + '/.env'})
 const axios = require('axios').default;
 const bodyParser = require('body-parser')
-const PORT = process.env.PORT || 3000;
+const PORT = env.PORT || 3000
 
 const app = express();
-
-
-let graphUri = `https://graph.facebook.com`
-let access_token = 'EAAG1vC6Gl6cBAOwZA7ew5fYX4jpVPgcoHlESjri4MVzfYgB7bvqWsdwVZCDvONSVhcdqpA3M3vgKNmXtAZBvnbNPjLESvZCZAdQnTZC53YFmABRo1HE4ZBZBCLjgRwZAsqqIggVKqegWRMUyBZAbq8jJB1t9d9IKEEMRlQ5CkszZBZCWIRICOqy3z8qCBtarOTw8WVnYhZAp73uD7KgZDZD'
-let page_token   = 'EAAG1vC6Gl6cBAN76ucHyFedeEm2idJDdxtMIziPo0fpCT5ogNVYKDrcgnN9vWsVY4EE3J7tyWZB5azdDSanVTMrrSNldTdtxBo7H8zulm23tTFDHcZBKoK7njJGEIeDeQQsRViD5TbXCbp4pKEbGJ1OYZAzCprHTZAephm9tX6dVpcPNmRJbAqMPrxJ12BQUSfdecQQfegZDZD'
-let app_token = '481294815762343|XSkVb_XZV0wvrK4nkEFrZFWBHio'
-
+console.log('env',env.parsed)
+let graphUri = env.graphUri
+let access_token = env.access_token
+let page_token   = env.page_token
+let app_token = env.app_token
 
 axios.interceptors.response.use((response)=>{
-
     return response.data
 })
-
 
 let url = 
 `${graphUri}/me?access_token=${access_token}` //getUser
@@ -66,12 +63,12 @@ let pageId = pages.data[0].id
  let page = await getPage(pageId, 'fields=about')
  let posts = await getPagePosts(pageId)
  let recentPostId = posts.data[0].id;
- let comments = await getPostComments(recentPostId)
+//  let comments = await getPostComments(recentPostId)
 
 // console.log('user',user)
 // console.log('page', page)
 
-console.log(comments)
+
 }
 
 
